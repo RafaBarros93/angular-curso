@@ -1,0 +1,129 @@
+<div class="jumbotron" ng-controller="listaTelefonicaCtrl">
+    <h3>{{ app }}</h3>
+
+    <!--    <ui-accordion title="Accordion 1">
+        Anim pariatur cliche reprehenderit, enim eiusmod high life
+        accusamus terry richardson ad squid. 3 wolf moon officia aute,
+        non cupidatat skateboard dolor brunch. Food truck quinoa
+        nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua
+        put a bird on it squid single-origin coffee nulla assumenda
+        shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore
+        wes anderson cred nesciunt sapiente ea proident. Ad vegan
+        excepteur butcher vice lomo. Leggings occaecat craft beer
+        farm-to-table, raw denim aesthetic synth nesciunt you probably
+        haven't heard of them accusamus labore sustainable VHS.
+    </ui-accordion> -->
+    <!--<ui-alert title="Ops, aconteceu um problema!">
+        {{ error }}
+    </ui-alert> -->
+    <input
+        type="text"
+        class="form-control"
+        ng-model="search"
+        placeholder="O que voçê está buscando?"
+    />
+    <table class="table table-striped" ng-show="contatcts.length > 0">
+        <tr>
+            <th>Remover</th>
+            <th><a href="" ng-click="orderBy('name')">Nome</a></th>
+            <th>
+                <a href="" ng-click="orderBy('phone')">Telefône</a>
+            </th>
+            <th>Operadora</th>
+            <th>Data</th>
+        </tr>
+        <tr
+            ng-repeat="contatct in contatcts | filter:search | orderBy:criteryOrdenation:directionOrdenation"
+        >
+            <td>
+                <input type="checkbox" ng-model="contatct.selected" />
+            </td>
+            <td>{{ contatct.name | name | ellipsis: 10 }}</td>
+            <td>{{ contatct.phone }}</td>
+            <td>{{ contatct.operators.name }}</td>
+            <td>{{ contatct.created_at | date: "dd/MM/yyyy" }}</td>
+        </tr>
+    </table>
+
+    <hr />
+    <form name="contactForm">
+        <input
+            class="form-control"
+            type="text"
+            ng-model="contatct.name"
+            placeholder="Nome:"
+            ng-required="true"
+            name="name"
+        />
+
+        <input
+            class="form-control"
+            type="text"
+            ng-model="contatct.phone"
+            placeholder="Telefone:"
+            ng-required="true"
+            name="phone"
+            ng-minlength="9"
+            ng-pattern="/^\((\d{2})\)\d{4,5}-\d{4}$/"
+        />
+
+        <input
+            class="form-control"
+            type="text"
+            ng-model="contatct.date"
+            placeholder="Data:"
+            ng-required="true"
+            name="date"
+            ui-date
+        />
+
+        <select
+            class="form-control"
+            ng-model="contatct.operators"
+            ng-options="operator.name group by operator.category for operator in operators"
+        >
+            <option value="">Selecione uma operadora:</option>
+        </select>
+    </form>
+
+    <div
+        ng-show="contactForm.name.$invalid && contactForm.name.$dirty"
+        class="alert alert-danger"
+    >
+        Ops, prencha o nome!
+    </div>
+
+    <div
+        ng-show="contactForm.phone.$error.required && contactForm.phone.$dirty"
+        class="alert alert-danger"
+    >
+        Ops, prencha o telefone!
+    </div>
+
+    <div
+        ng-show="contactForm.phone.$error.minlength "
+        class="alert alert-danger"
+    >
+        O campo nome deve ter no mínimo 10 caracteres.
+    </div>
+
+    <div ng-show="contactForm.phone.$error.pattern " class="alert alert-danger">
+        O campo nome deve ter o padrão XXXX-XXXX .
+    </div>
+
+    <button
+        class="btn btn-success"
+        ng-click="addContact(contatct)"
+        ng-disabled="!contatct.name || !contatct.phone"
+    >
+        Add Contato
+    </button>
+
+    <button
+        class="btn btn-danger"
+        ng-click="removeContact(contatcts)"
+        ng-disabled="!isContactSelected(contatcts)"
+    >
+        Remover Contato
+    </button>
+</div>

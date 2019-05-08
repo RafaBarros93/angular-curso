@@ -1,0 +1,13 @@
+{
+    "name": "lista-telefonica-frontend",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "http-server ./app -a localhost -p 8080"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC"
+}

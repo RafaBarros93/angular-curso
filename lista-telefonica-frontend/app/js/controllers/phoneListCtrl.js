@@ -1,4 +1,4 @@
-const app = angular.module("listaTelefonica", []);
+const app = angular.module("listaTelefonica", ["ngRoute"]);
 
 app.controller("listaTelefonicaCtrl", function($scope, contactsApi) {
     $scope.app = "Lista Telefônica";
@@ -27,10 +27,6 @@ app.controller("listaTelefonicaCtrl", function($scope, contactsApi) {
             category: "Fixo"
         }
     ];
-
-    $scope.contact = {
-        date: 743569200000
-    };
 
     const loadContacts = () => {
         contactsApi.getContacts().then(
